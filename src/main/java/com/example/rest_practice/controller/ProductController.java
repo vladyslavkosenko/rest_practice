@@ -4,7 +4,6 @@ import com.example.rest_practice.entity.Product;
 import com.example.rest_practice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -37,11 +36,8 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    public Product update(@PathVariable Long productId, @RequestBody Product product) {
-//        if (!id.equals(product.getId())) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product id in body must be " + id);
-//        }
-        return productService.putProduct(productId, product);
+    public Product update(@RequestBody Product productWithId) {
+        return productService.putProduct(productWithId);
     }
 
     @DeleteMapping("/{productID}")

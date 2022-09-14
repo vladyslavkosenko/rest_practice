@@ -22,6 +22,7 @@ public class ProductService {
     public Iterable<Product> getProducts() {
         return productRepository.findAll();
     }
+
     public Optional<Product> findById(Long productId) {
         return productRepository.findById(productId);
     }
@@ -29,16 +30,14 @@ public class ProductService {
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
-    public Product putProduct(Long productId, Product productToUpdate) {
+
+    public Product putProduct(Product productWithId) {
 //        if (!productId.equals(productToUpdate.getId())) {
 //        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product productId in body must be " + productId);
 //    }
-        Product productFromRepository = productRepository.findById(productId).orElse(null);
-        assert productFromRepository != null;
-        productFromRepository.setName(productToUpdate.getName());
-        productFromRepository.setPrice(productToUpdate.getPrice());
-       return productFromRepository;
+        return productRepository.save(productWithId);
     }
+
     public void deleteProduct(Long productId) {
         if (!productRepository.existsById(productId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with id " + productId + " is missed");
