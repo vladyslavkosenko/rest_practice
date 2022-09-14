@@ -3,7 +3,9 @@ package com.example.rest_practice.service;
 import com.example.rest_practice.entity.Product;
 import com.example.rest_practice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -26,6 +28,23 @@ public class ProductService {
 
     public Product createProduct(Product product) {
         return productRepository.save(product);
+    }
+    public Product putProduct(Long productId, Product productToUpdate) {
+//        if (!productId.equals(productToUpdate.getId())) {
+//        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product productId in body must be " + productId);
+//    }
+        Product productFromRepository = productRepository.findById(productId).orElse(null);
+        assert productFromRepository != null;
+        productFromRepository.setName(productToUpdate.getName());
+        productFromRepository.setPrice(productToUpdate.getPrice());
+       return productFromRepository;
+    }
+    public void deleteProduct(Long productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with id " + productId + " is missed");
+        }
+        productRepository.deleteById(productId);
+
     }
 
 }
