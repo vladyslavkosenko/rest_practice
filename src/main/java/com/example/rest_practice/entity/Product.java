@@ -20,7 +20,5 @@ public class Product {
 
     private BigDecimal price;
 
-    @Version
-    private Long version;
 
 }
