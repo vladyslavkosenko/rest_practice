@@ -7,9 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
-
 @Service
 public class ProductService {
     @Autowired
@@ -23,8 +20,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> findById(Long productId) {
-        return productRepository.findById(productId);
+    public Product findById(Long productId) {
+        isFound(productId);
+        return productRepository.findById(productId).orElse(null);
     }
 
     public Product createProduct(Product product) {
@@ -32,18 +30,16 @@ public class ProductService {
     }
 
     public Product putProduct(Product productWithId) {
-//        if (!productId.equals(productToUpdate.getId())) {
-//        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product productId in body must be " + productId);
-//    }
         return productRepository.save(productWithId);
     }
 
     public void deleteProduct(Long productId) {
-        if (!productRepository.existsById(productId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with id " + productId + " is missed");
-        }
+        isFound(productId);
         productRepository.deleteById(productId);
-
     }
 
+    public void isFound(Long productId)  {
+        if (!productRepository.existsById(productId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
 }

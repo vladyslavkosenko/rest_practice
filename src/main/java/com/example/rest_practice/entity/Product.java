@@ -20,4 +20,11 @@ public class Product {
 
     private BigDecimal price;
 
+    @Version
+    private Long version;
+
+    public Product(String name, BigDecimal price, Long version) {
+        this.name = name;
+        this.price = price;
+    }
 }
