@@ -1,6 +1,9 @@
 package com.example.rest_practice.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -23,7 +26,7 @@ public class Product {
     @Version
     private Long version;
 
-    public Product(String name, BigDecimal price, Long version) {
+    public Product(String name, BigDecimal price) {
         this.name = name;
         this.price = price;
     }
