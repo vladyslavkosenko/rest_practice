@@ -21,7 +21,6 @@ public class ProductService {
     }
 
     public Product findById(Long productId) {
-        isFound(productId);
         return productRepository.findById(productId).orElse(null);
     }
 
