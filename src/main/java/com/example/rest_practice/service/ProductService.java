@@ -1,6 +1,7 @@
 package com.example.rest_practice.service;
 
 import com.example.rest_practice.entity.Product;
+import com.example.rest_practice.exception.ProductNotFoundException;
 import com.example.rest_practice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,13 +33,13 @@ public class ProductService {
         return productRepository.save(productWithId);
     }
 
-    public void deleteProduct(Long productId) {
+    public void deleteProduct(Long productId) throws ProductNotFoundException {
         isFound(productId);
         productRepository.deleteById(productId);
     }
 
-    public void isFound(Long productId)  {
+    public void isFound(Long productId) throws ProductNotFoundException {
         if (!productRepository.existsById(productId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ProductNotFoundException("Product not found");
     }
 }

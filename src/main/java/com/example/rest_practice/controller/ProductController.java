@@ -1,6 +1,7 @@
 package com.example.rest_practice.controller;
 
 import com.example.rest_practice.entity.Product;
+import com.example.rest_practice.exception.ProductNotFoundException;
 import com.example.rest_practice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productID}")
-    public void delete(@PathVariable Long productID) {
+    public void delete(@PathVariable Long productID) throws ProductNotFoundException {
         productService.deleteProduct(productID);
     }
 }
